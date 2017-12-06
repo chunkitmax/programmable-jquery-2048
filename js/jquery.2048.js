@@ -3,10 +3,11 @@
      * User options
      */
     var defaults = {
-        delay: 200 //Game speed
+        delay: 0 //Game speed
     };
 
-    $.fn.init2048 = function (_options) {
+    // callback: function (score) {}
+    $.fn.init2048 = function (callback, _options) {
         var _this = this,
             options = $.extend(defaults, _options),
 
@@ -24,7 +25,10 @@
             boxes = [], //Boxes storage
 
             isCheating = 0,
-            isGameOver = false;
+            score = 0,
+            isGameOver = false,
+
+            callback_fn = callback;
 
         resetGame();
         bind();
@@ -147,6 +151,8 @@
             });
             boxes[source].remove();
             boxes.splice(source, 1);
+            score += parseInt(value) * 2;
+            callback_fn(score);
         }
 
         /**
@@ -198,6 +204,9 @@
                 isGameOver = true;
                 alert("Game Over");
             }
+            values = boxes.map((v) => parseInt(v.attr('value')));
+            curIndex = 0;
+            return matrix.map((v) => ((v.taken)? values[curIndex++] : 0));
         }
 
         /**
@@ -546,5 +555,6 @@
             }
             return isMoved;
         }
+        return gameRun;
     }
 })(jQuery);

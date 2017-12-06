@@ -10,12 +10,20 @@
 <body>
     <div class="container text-center" id="2048">
     </div>
+    <center><span id="score">0</span></center>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.2048.js"></script>
     <script>
+        var gameRun = null;
         $(document).ready(function () {
-            $("#2048").init2048();
+            gameRun = $("#2048").init2048((score) => $('#score').html(score));
         });
+        function randomPlay() {
+            let dir = ['up', 'down', 'left', 'right']
+            for (let i = 0; i < 5; i++)
+                //console.log(gameRun(dir[parseInt(Math.random() * 4)]))
+                gameRun(dir[parseInt(Math.random() * 4)])
+        }
     </script>
 </body>
 
